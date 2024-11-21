@@ -1,0 +1,60 @@
+﻿<Window x:Class="CELLTECH_COM.Views.Dialogs.CustomMessageBox"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CELLTECH_COM.Views.Dialogs"
+        mc:Ignorable="d"
+               Title="MessageBox" 
+        Height="200" 
+        Width="400"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent">
+
+    <Border Background="White" 
+            CornerRadius="8"
+            BorderBrush="#dee2e6"
+            BorderThickness="1">
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Título -->
+            <TextBlock x:Name="TxtTitulo"
+                     FontSize="18"
+                     FontWeight="SemiBold"/>
+
+            <!-- Mensaje -->
+            <TextBlock x:Name="TxtMensaje"
+                     Grid.Row="1"
+                     TextWrapping="Wrap"
+                     VerticalAlignment="Center"/>
+
+            <!-- Botones -->
+            <StackPanel Grid.Row="2" 
+                      Orientation="Horizontal"
+                      HorizontalAlignment="Right">
+                <Button x:Name="BtnAceptar"
+                        Content="ACEPTAR"
+                        Style="{StaticResource PrimaryButton}"
+                        Width="100"
+                        Height="35"
+                        Click="BtnAceptar_Click"/>
+
+                <Button x:Name="BtnCancelar"
+                        Content="CANCELAR"
+                        Style="{StaticResource SecondaryButton}"
+                        Width="100"
+                        Height="35"
+                        Margin="10,0,0,0"
+                        Click="BtnCancelar_Click"
+                        Visibility="Collapsed"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>

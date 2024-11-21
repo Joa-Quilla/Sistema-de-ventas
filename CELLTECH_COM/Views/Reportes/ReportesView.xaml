@@ -1,0 +1,329 @@
+﻿<UserControl x:Class="CELLTECH_COM.Views.Reportes.ReportesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CELLTECH_COM.Views.Reportes"
+             mc:Ignorable="d" 
+                          d:DesignHeight="768" d:DesignWidth="1024">
+
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+    </UserControl.Resources>
+
+    <Grid x:Name="MainGrid">
+        <ScrollViewer>
+            <StackPanel Margin="20">
+                <!-- Panel Superior - Estado de Caja -->
+                <Border Style="{StaticResource StatusCardReportes}" Margin="0,0,0,20">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Información de Estado -->
+                        <StackPanel>
+                            <TextBlock Text="Estado de Caja" 
+                                     Style="{StaticResource HeaderLabelReportes}"
+                                     Margin="0,0,0,5"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                                <TextBlock Text="Estado: " 
+                                         Style="{StaticResource LabelTextReportes}"/>
+                                <TextBlock Text="{Binding EstadoCaja}" 
+                                         Style="{StaticResource ValueTextReportes}"
+                                         Foreground="{Binding EstadoCajaColor}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Último movimiento: " 
+                                         Style="{StaticResource LabelTextReportes}"/>
+                                <TextBlock Text="{Binding UltimoMovimiento}" 
+                                         Style="{StaticResource ValueTextReportes}"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <!-- Botón de Acción -->
+                        <Button Grid.Column="1" 
+                                Style="{StaticResource ActionButton}"
+                                Command="{Binding CambiarEstadoCajaCommand}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding BotonCajaTexto}" 
+                                         Margin="0,0,5,0"/>
+                                <TextBlock Text="{Binding BotonCajaIcono}"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                </Border>
+
+                <!-- Selector de Tipo de Reporte -->
+                <Border Style="{StaticResource FilterCardReportes}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="250"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel>
+                            <TextBlock Text="Tipo de Reporte" 
+                                     Style="{StaticResource SubHeaderLabel}"/>
+                            <ComboBox Style="{StaticResource ModernComboBox}"
+                                     Margin="0,5"
+                                     SelectedIndex="0"
+                                     >
+                                <ComboBoxItem>Inventario Completo</ComboBoxItem>
+                                <ComboBoxItem>Cierre de Caja</ComboBoxItem>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <!-- Filtros adicionales según el tipo de reporte -->
+                        <StackPanel Grid.Column="1" 
+                                  Margin="20,0,0,0"
+                                  Visibility="{Binding MostrarFiltrosInventario}">
+                            <TextBlock Text="Filtros" 
+                                     Style="{StaticResource SubHeaderLabel}"/>
+                            <WrapPanel>
+                                <ComboBox Style="{StaticResource ModernComboBox}"
+                                         Width="150"
+                                         Margin="0,5,10,0">
+                                    <ComboBoxItem IsEnabled="False" IsSelected="True">
+                                        <TextBlock Foreground="{StaticResource SecondaryColor}" 
+                                                 Text="Categoría"/>
+                                    </ComboBoxItem>
+                                </ComboBox>
+
+                                <ComboBox Style="{StaticResource ModernComboBox}"
+                                         Width="150"
+                                         Margin="0,5,10,0">
+                                    <ComboBoxItem IsEnabled="False" IsSelected="True">
+                                        <TextBlock Foreground="{StaticResource SecondaryColor}" 
+                                                 Text="Marca"/>
+                                    </ComboBoxItem>
+                                </ComboBox>
+
+                                <TextBox Width="200"
+                                        Margin="0,5,0,0">
+                                    <TextBox.Template>
+                                        <ControlTemplate TargetType="TextBox">
+                                            <Border Background="{TemplateBinding Background}"
+                                                    BorderBrush="{StaticResource BorderColor}"
+                                                    BorderThickness="1"
+                                                    CornerRadius="4">
+                                                <Grid>
+                                                    <TextBlock Text="Buscar por nombre o código"
+                                                             Foreground="{StaticResource SecondaryColor}"
+                                                             Margin="30,0,0,0"
+                                                             VerticalAlignment="Center"
+                                                             Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, 
+                                                                        Path=Text.IsEmpty, Converter={StaticResource BoolToVis}}"/>
+                                                    <TextBlock Text="🔍" 
+                                                             Margin="10,0,0,0"
+                                                             VerticalAlignment="Center"
+                                                             Foreground="{StaticResource SecondaryColor}"/>
+                                                    <ScrollViewer x:Name="PART_ContentHost" 
+                                                                Margin="30,0,0,0"
+                                                                VerticalAlignment="Center"/>
+                                                </Grid>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </TextBox.Template>
+                                    <TextBox.Style>
+                                        <Style TargetType="TextBox">
+                                            <Setter Property="Height" Value="35"/>
+                                            <Setter Property="Background" Value="White"/>
+                                            <Setter Property="BorderBrush" Value="{StaticResource BorderColor}"/>
+                                            <Setter Property="BorderThickness" Value="1"/>
+                                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                        </Style>
+                                    </TextBox.Style>
+                                </TextBox>
+                            </WrapPanel>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- Área de Resultados -->
+                <Border Style="{StaticResource CardStyleReportes}" Margin="0,20,0,0">
+                    <DockPanel>
+                        <!-- Cabecera con título y acciones -->
+                        <Grid DockPanel.Dock="Top" Margin="0,0,0,15">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel>
+                                <TextBlock Text="{Binding TituloReporte}" 
+                         Style="{StaticResource HeaderLabelReportes}"/>
+                                <TextBlock Text="{Binding SubtituloReporte}" 
+                         Style="{StaticResource SubHeaderLabel}"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" 
+                      Orientation="Horizontal">
+                                <Button Style="{StaticResource ExportButton}"
+                        Command="{Binding ExportarPDFCommand}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="📄" Margin="0,0,5,0"/>
+                                        <TextBlock Text="PDF"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button Style="{StaticResource ExportButton}"
+                        Command="{Binding ExportarExcelCommand}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="📊" Margin="0,0,5,0"/>
+                                        <TextBlock Text="Excel"/>
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- DataGrid para Inventario -->
+                        <DataGrid x:Name="DgInventario"
+                 Style="{StaticResource ModernDataGrid}"
+                 ItemsSource="{Binding DatosInventario}"
+                 Visibility="{Binding VistaInventarioVisible}">
+                            <DataGrid.Resources>
+                                <Style TargetType="DataGridColumnHeader" 
+                       BasedOn="{StaticResource DataGridColumnHeader}"/>
+                            </DataGrid.Resources>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" 
+                                  Binding="{Binding ProductoID}"
+                                  Width="60"/>
+                                <DataGridTextColumn Header="Código" 
+                                  Binding="{Binding Codigo}"
+                                  Width="100"/>
+                                <DataGridTextColumn Header="Nombre" 
+                                  Binding="{Binding Nombre}"
+                                  Width="*"/>
+                                <DataGridTextColumn Header="Categoría" 
+                                  Binding="{Binding CategoriaID}"
+                                  Width="100"/>
+                                <DataGridTextColumn Header="Marca" 
+                                  Binding="{Binding MarcaID}"
+                                  Width="100"/>
+                                <DataGridTextColumn Header="Modelo" 
+                                  Binding="{Binding Modelo}"
+                                  Width="100"/>
+                                <DataGridTextColumn Header="Precio" 
+                                  Binding="{Binding PrecioVenta, StringFormat=C2}"
+                                  Width="100"/>
+                                <DataGridTextColumn Header="Stock" 
+                                  Binding="{Binding StockActual}"
+                                  Width="70"/>
+                                <DataGridTextColumn Header="Mín" 
+                                  Binding="{Binding StockMinimo}"
+                                  Width="70"/>
+                                <DataGridTemplateColumn Header="Estado" 
+                                      Width="90">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Border CornerRadius="4" 
+                                    Padding="5,2"
+                                    Background="{Binding EstadoColor}">
+                                                <TextBlock Text="{Binding Estado}" 
+                                         Foreground="White"
+                                         HorizontalAlignment="Center"/>
+                                            </Border>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Header="Registro" 
+                                  Binding="{Binding FechaRegistro, StringFormat=d}"
+                                  Width="100"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <!-- DataGrid para Cierre de Caja -->
+                        <DataGrid x:Name="DgCierreCaja"
+                 Style="{StaticResource ModernDataGrid}"
+                 ItemsSource="{Binding DatosCierreCaja}"
+                 Visibility="{Binding VistaCierreVisible}">
+                            <DataGrid.Resources>
+                                <Style TargetType="DataGridColumnHeader" 
+                       BasedOn="{StaticResource DataGridColumnHeader}"/>
+                            </DataGrid.Resources>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" 
+                                  Binding="{Binding CierreID}"
+                                  Width="60"/>
+                                <DataGridTextColumn Header="Usuario" 
+                                  Binding="{Binding UsuarioID}"
+                                  Width="100"/>
+                                <DataGridTextColumn Header="Inicio" 
+                                  Binding="{Binding FechaInicio, StringFormat=g}"
+                                  Width="130"/>
+                                <DataGridTextColumn Header="Cierre" 
+                                  Binding="{Binding FechaCierre, StringFormat=g}"
+                                  Width="130"/>
+                                <DataGridTextColumn Header="Monto Inicial" 
+                                  Binding="{Binding MontoInicial, StringFormat=C2}"
+                                  Width="110"/>
+                                <DataGridTextColumn Header="Monto Final" 
+                                  Binding="{Binding MontoFinal, StringFormat=C2}"
+                                  Width="110"/>
+                                <DataGridTextColumn Header="Total Ventas" 
+                                  Binding="{Binding TotalVentas, StringFormat=C2}"
+                                  Width="110"/>
+                                <DataGridTextColumn Header="Efectivo" 
+                                  Binding="{Binding TotalEfectivo, StringFormat=C2}"
+                                  Width="110"/>
+                                <DataGridTextColumn Header="Transferencias" 
+                                  Binding="{Binding TotalTransferencias, StringFormat=C2}"
+                                  Width="110"/>
+                                <DataGridTemplateColumn Header="Estado" 
+                                      Width="90">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Border CornerRadius="4" 
+                                    Padding="5,2"
+                                    Background="{Binding EstadoColor}">
+                                                <TextBlock Text="{Binding Estado}" 
+                                         Foreground="White"
+                                         HorizontalAlignment="Center"/>
+                                            </Border>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Header="Observación" 
+                                  Binding="{Binding Observacion}"
+                                  Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </DockPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Popup para Monto Inicial -->
+        <Border Background="#80000000"
+                Visibility="{Binding IsMontoInicialPopupOpen, Converter={StaticResource BoolToVis}}">
+            <Border Background="White" 
+                    Width="300" 
+                    CornerRadius="8" 
+                    Padding="20"
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center">
+                <StackPanel>
+                    <TextBlock Text="Ingrese Monto Inicial" 
+                              Style="{StaticResource HeaderLabelReportes}" 
+                              Margin="0,0,0,15"/>
+                    <TextBox Text="{Binding MontoInicial, UpdateSourceTrigger=PropertyChanged}"
+                            Style="{StaticResource ModernTextBox}"
+                            PreviewTextInput="MontoInicialTextBox_PreviewTextInput"/>
+                    <StackPanel Orientation="Horizontal" 
+                              HorizontalAlignment="Right" 
+                              Margin="0,15,0,0">
+                        <Button Content="Cancelar" 
+                                Style="{StaticResource SecondaryButton}"
+                                Command="{Binding CancelarMontoInicialCommand}"
+                                Margin="0,0,10,0" Width="56"/>
+                        <Button Content="Confirmar" 
+                                Style="{StaticResource PrimaryButton}"
+                                Command="{Binding ConfirmarMontoInicialCommand}" Width="61" Click="Button_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Border>
+    </Grid>
+</UserControl>

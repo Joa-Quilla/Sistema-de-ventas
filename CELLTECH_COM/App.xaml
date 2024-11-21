@@ -1,0 +1,22 @@
+﻿<Application x:Class="CELLTECH_COM.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:CELLTECH_COM"
+             xmlns:converters="clr-namespace:CELLTECH_COM.Converters"
+             StartupUri="Views/Login.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <!-- Convertidores -->
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+            <converters:MessageColorConverter x:Key="MessageColorConverter"/>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/Styles.xaml"/>
+                <ResourceDictionary Source="/Styles/StyleMenu.xaml"/>
+                <ResourceDictionary Source="/Styles/StyleVentas.xaml"/>
+                <ResourceDictionary Source="/Styles/StylesInventario.xaml"/>
+                <ResourceDictionary Source="/Styles/StylesReportes.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

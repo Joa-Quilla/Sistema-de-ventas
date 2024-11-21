@@ -1,0 +1,102 @@
+﻿<Window x:Class="CELLTECH_COM.Views.InventarioProductos.NuevaCategoriaWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Height="490" 
+        Width="450"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent">
+
+    <Border Background="#f8f9fa" 
+            
+            BorderThickness="1"
+            BorderBrush="{StaticResource BorderColor}">
+        <Grid Margin="0,0,0,-101">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="209*"/>
+                <RowDefinition Height="12*"/>
+                <RowDefinition Height="Auto" MinHeight="97.005"/>
+            </Grid.RowDefinitions>
+
+            <!-- Encabezado -->
+            <Border Background="White" 
+                    BorderBrush="{StaticResource BorderColor}"
+                    Padding="1">
+                <Grid>
+                    <TextBlock
+                 FontSize="25"
+                 FontWeight="SemiBold" Margin="17,8,0,0"><Run Text="Nuev"/><Run Language="es-es" Text="a"/><Run Text=" "/><Run Language="es-es" Text="Categoría"/></TextBlock>
+                    <Button Content="✕" 
+                HorizontalAlignment="Left"
+                Style="{StaticResource ActionButton}"
+                Width="32"
+                Height="32"
+                Click="btnCerrar_Click" Margin="406,0,0,0" VerticalAlignment="Center"/>
+                </Grid>
+            </Border>
+
+            <!-- Formulario -->
+            <StackPanel Grid.Row="1" 
+                        Margin="20,0,20,0" Grid.RowSpan="2" Height="419" VerticalAlignment="Center">
+                <TextBlock Text="Información de la Categoría" 
+                          FontWeight="SemiBold" 
+                          FontSize="16"
+                          Margin="0,0,0,20"/>
+
+                <!-- Código -->
+                <TextBlock Text="Código:" 
+                          Style="{StaticResource FormLabel}"/>
+                <TextBox x:Name="txtCodigo"
+                        Height="35" 
+                        Margin="0,0,0,15"
+                        Style="{StaticResource SearchTextBox}"/>
+
+                <!-- Nombre -->
+                <TextBlock Text="Nombre:" 
+                          Style="{StaticResource FormLabel}"/>
+                <TextBox x:Name="txtNombre"
+                        Height="35" 
+                        Margin="0,0,0,15"
+                        Style="{StaticResource SearchTextBox}"/>
+
+                <!-- Descripción -->
+                <TextBlock Text="Descripción:" 
+                          Style="{StaticResource FormLabel}"/>
+                <TextBox x:Name="txtDescripcion"
+                        Height="100" 
+                        TextWrapping="Wrap"
+                        AcceptsReturn="True"
+                        VerticalScrollBarVisibility="Auto"
+                        Margin="0,0,0,15"
+                        Style="{StaticResource SearchTextBox}"/>
+
+                <!-- Botones -->
+                <Border Grid.Row="2" 
+        Background="White"
+        BorderThickness="0,1,0,0"
+        BorderBrush="{StaticResource BorderColor}"
+        Padding="10" Margin="0,0,0,-69" Height="61">
+                    <StackPanel Orientation="Horizontal" 
+               HorizontalAlignment="Right">
+                        <Button Content="Cancelar"
+                Width="100"
+                Height="35"
+                Margin="0,0,10,0"
+                Style="{StaticResource ActionButton}"
+                Click="btnCancelar_Click"/>
+                        <Button Content="Guardar"
+                Width="100"
+                Height="35"
+                Style="{StaticResource PrimaryButton}"
+                Click="btnGuardar_Click"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+
+        </Grid>
+    </Border>
+</Window>
+
